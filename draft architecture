@@ -1,0 +1,42 @@
+// server.js
+const express = require('express');
+const mongoose = require('mongoose');
+const proposalRoutes = require('./routes/proposals');
+const userRoutes = require('./routes/users');
+
+const app = express();
+
+// Connect to the database
+mongoose.connect('mongodb://localhost:27017/your_database_name', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+app.use(express.json());
+
+app.use('/proposals', proposalRoutes);
+app.use('/users', userRoutes);
+
+app.listen(3000, () => {
+  console.log('Server listening on port 3000');
+});
+// App.js
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './components/Home';
+import Proposals from './components/Proposals';
+import Users from './components/Users';
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/proposals" element={<Proposals />} />
+        <Route path="/users" element={<Users />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
